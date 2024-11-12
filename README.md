@@ -1,3 +1,7 @@
+**Note*:* This branch includes some adaptions used to develop [IsaacLabExtensionCsiroHRI](https://bitbucket.csiro.au/users/men119/repos/isaaclabextensioncsirohri/browse), and it is under devloping.
+
+---
+
 ![Isaac Lab](docs/source/_static/isaaclab.jpg)
 
 ---
