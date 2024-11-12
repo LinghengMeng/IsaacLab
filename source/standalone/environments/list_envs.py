@@ -28,6 +28,7 @@ import gymnasium as gym
 from prettytable import PrettyTable
 
 import omni.isaac.lab_tasks  # noqa: F401
+import pref_hidden_values.tasks  # import tasks defined in pref_hidden_values
 
 
 def main():

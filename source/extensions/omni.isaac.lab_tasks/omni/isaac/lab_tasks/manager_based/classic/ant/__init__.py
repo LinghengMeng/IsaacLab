@@ -22,8 +22,13 @@ gym.register(
     kwargs={
         "env_cfg_entry_point": f"{__name__}.ant_env_cfg:AntEnvCfg",
         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:AntPPORunnerCfg",
+        # "rsl_rl_alg_branch_cfg_entry_point": f"{agents.__name__}.rsl_rl_alg_branch_ppo_cfg:AntPPORunnerCfg",
+        # "rsl_rl_alg_branch_cfg_entry_point": f"{agents.__name__}.rsl_rl_alg_branch_td3_cfg:AntTD3RunnerCfg",
+        "rsl_rl_alg_branch_cfg_entry_point": f"{agents.__name__}.rsl_rl_alg_branch_sac_cfg:AntSACRunnerCfg",
         "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
         "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+        "sb3_td3_cfg_entry_point": f"{agents.__name__}:sb3_td3_cfg.yaml",
+        "sb3_sac_cfg_entry_point": f"{agents.__name__}:sb3_sac_cfg.yaml",
     },
 )

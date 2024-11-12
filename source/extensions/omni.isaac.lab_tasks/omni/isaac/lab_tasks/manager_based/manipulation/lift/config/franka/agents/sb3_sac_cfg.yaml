@@ -1,0 +1,23 @@
+# Reference: https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/ppo.yml#L32
+seed: 42
+
+# epoch * n_steps * nenvs: 500×512*8*8
+n_timesteps: 6000000000
+policy: 'MlpPolicy'
+# n_steps: 64
+# # mini batch size: num_envs * nsteps / nminibatches 2048×512÷2048
+# batch_size: 192
+# gae_lambda: 0.95
+# gamma: 0.99
+# n_epochs: 8
+# ent_coef: 0.00
+# vf_coef: 0.0001
+# learning_rate: !!float 3e-4
+# clip_range: 0.2
+# This activation function is for actor https://stable-baselines3.readthedocs.io/en/master/_modules/stable_baselines3/td3/policies.html#TD3Policy 
+policy_kwargs: "dict(
+                  net_arch=dict(pi=[256, 256], qf=[256, 256]),
+                )"
+# target_kl: 0.01
+# max_grad_norm: 1.0
+

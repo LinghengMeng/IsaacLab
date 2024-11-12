@@ -33,6 +33,7 @@ import gymnasium as gym
 import torch
 
 import omni.isaac.lab_tasks  # noqa: F401
+import pref_hidden_values.tasks  # import tasks defined in pref_hidden_values
 from omni.isaac.lab_tasks.utils import parse_env_cfg
 
 
