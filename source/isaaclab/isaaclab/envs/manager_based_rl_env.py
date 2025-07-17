@@ -204,8 +204,9 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
         self.reset_buf = self.termination_manager.compute()
         self.reset_terminated = self.termination_manager.terminated
         self.reset_time_outs = self.termination_manager.time_outs
-        # -- reward computation
-        self.reward_buf = self.reward_manager.compute(dt=self.step_dt)
+        # -- reward computation where separate reward terms are also returned
+        self.reward_buf, self.reward_term_buf_dict, \
+            self.reward_term_unweighted_buf_dict, self.reward_term_weight_dict = self.reward_manager.compute(dt=self.step_dt)
 
         if len(self.recorder_manager.active_terms) > 0:
             # update observations for recording if needed
@@ -238,6 +239,9 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
         self.obs_buf = self.observation_manager.compute(update_history=True)
 
         # return observations, rewards, resets and extras
+        self.extras["reward_term_buf_dict"] = self.reward_term_buf_dict
+        self.extras["reward_term_unweighted_buf_dict"] = self.reward_term_unweighted_buf_dict
+        self.extras["reward_term_weight_dict"] = self.reward_term_weight_dict
         return self.obs_buf, self.reward_buf, self.reset_terminated, self.reset_time_outs, self.extras
 
     def render(self, recompute: bool = False) -> np.ndarray | None:
@@ -389,6 +393,6 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
         # -- recorder manager
         info = self.recorder_manager.reset(env_ids)
         self.extras["log"].update(info)
-
+        
         # reset the episode length buffer
         self.episode_length_buf[env_ids] = 0
