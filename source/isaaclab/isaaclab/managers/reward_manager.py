@@ -64,6 +64,11 @@ class RewardManager(ManagerBase):
         # Buffer which stores the current step reward for each term for each environment
         self._step_reward = torch.zeros((self.num_envs, len(self._term_names)), dtype=torch.float, device=self.device)
 
+        # Add buffer for each weighted reward term, unweighted reward term, and reward term weight
+        self._reward_term_buf_dict = {name: torch.zeros(self.num_envs, dtype=torch.float, device=self.device) for name in self._term_names}
+        self._reward_term_unweighted_buf_dict = {name: torch.zeros(self.num_envs, dtype=torch.float, device=self.device) for name in self._term_names}
+        self._reward_term_weight_dict = {name: torch.zeros(self.num_envs, dtype=torch.float, device=self.device) for name in self._term_names}
+
     def __str__(self) -> str:
         """Returns: A string representation for reward manager."""
         msg = f"<RewardManager> contains {len(self._term_names)} active terms.\n"
@@ -125,7 +130,7 @@ class RewardManager(ManagerBase):
         # return logged information
         return extras
 
-    def compute(self, dt: float) -> torch.Tensor:
+    def compute(self, dt: float) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
         """Computes the reward signal as a weighted sum of individual terms.
 
         This function calls each reward term managed by the class and adds them to compute the net
@@ -147,6 +152,12 @@ class RewardManager(ManagerBase):
                 continue
             # compute term's value
             value = term_cfg.func(self._env, **term_cfg.params) * term_cfg.weight * dt
+            value_unweighted = term_cfg.func(self._env, **term_cfg.params) * dt
+            # update weighted reward term, unweighted reward term, and reward term weight
+            self._reward_term_buf_dict[name] = value                            # weighted reward
+            self._reward_term_unweighted_buf_dict[name] = value_unweighted      # unweighted reward
+            self._reward_term_weight_dict[name] = term_cfg.weight               # weight
+            
             # update total reward
             self._reward_buf += value
             # update episodic sum
@@ -155,7 +166,7 @@ class RewardManager(ManagerBase):
             # Update current reward for this step.
             self._step_reward[:, term_idx] = value / dt
 
-        return self._reward_buf
+        return self._reward_buf, self._reward_term_buf_dict, self._reward_term_unweighted_buf_dict, self._reward_term_weight_dict
 
     """
     Operations - Term settings.
