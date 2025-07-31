@@ -135,3 +135,36 @@ POSITION_GOAL_MARKER_CFG = VisualizationMarkersCfg(
     }
 )
 """Configuration for the end-effector tracking marker."""
+KEY_POINT_FRAME_MARKER_CFG = VisualizationMarkersCfg(
+    markers={
+        "frame": sim_utils.UsdFileCfg(
+            usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/UIElements/frame_prim.usd",
+            scale=(0.05, 0.05, 0.05),
+        )
+    }
+)
+
+KEY_POINT_0_MARKER_CFG = VisualizationMarkersCfg(
+    markers={
+        "key_point_0": sim_utils.SphereCfg(
+            radius=0.025,
+            visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.0, 0.0, 0.0)),
+        ),
+    }
+)
+KEY_POINT_1_MARKER_CFG = VisualizationMarkersCfg(
+    markers={
+        "key_point_1": sim_utils.SphereCfg(
+            radius=0.025,
+            visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(1.0, 0.0, 0.0)),
+        ),
+    }
+)
+KEY_POINT_2_MARKER_CFG = VisualizationMarkersCfg(
+    markers={
+        "key_point_2": sim_utils.SphereCfg(
+            radius=0.025,
+            visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.0, 1.0, 0.0)),
+        ),
+    }
+)

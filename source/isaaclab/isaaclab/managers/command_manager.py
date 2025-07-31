@@ -371,6 +371,50 @@ class CommandManager(ManagerBase):
             # compute term's value
             term.compute(dt)
 
+    def get_target_key_points(self, command_name: str) -> torch.Tensor:
+        """Returns the target key points for the specified command term.
+
+        Args:
+            command_name: The name of the command term.
+
+        Returns:
+            The target key points tensor of the specified command term.
+        """
+        return self._terms[command_name].target_key_points
+    
+    def get_ee_pose_key_points(self, command_name: str) -> torch.Tensor:
+        """Returns the end-effector pose key points for the specified command term.
+
+        Args:
+            command_name: The name of the command term.
+
+        Returns:
+            The end-effector pose key points tensor of the specified command term.
+        """
+        return self._terms[command_name].ee_pose_key_points
+
+    def get_command_key_points(self, name: str) -> torch.Tensor:
+        """Returns the command for the specified command term.
+
+        Args:
+            name: The name of the command term.
+
+        Returns:
+            The command tensor of the specified command term.
+        """
+        return self._terms[name].command_key_points
+    
+    def get_command_key_point_side_length(self, name: str) -> torch.Tensor:
+        """Returns the command key point side length for the specified command term.
+
+        Args:
+            name: The name of the command term.
+
+        Returns:
+            The command key point side length tensor of the specified command term.
+        """
+        return self._terms[name].command_key_point_side_length
+
     def get_command(self, name: str) -> torch.Tensor:
         """Returns the command for the specified command term.
 

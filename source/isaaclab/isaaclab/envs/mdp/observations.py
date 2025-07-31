@@ -616,6 +616,14 @@ def generated_commands(env: ManagerBasedRLEnv, command_name: str) -> torch.Tenso
     """The generated command from command term in the command manager with the given name."""
     return env.command_manager.get_command(command_name)
 
+def generated_key_points_commands(env: ManagerBasedRLEnv, command_name: str) -> torch.Tensor:
+    """The generated command from command term in the command manager with the given name."""
+    return env.command_manager.get_command_key_points(command_name)
+
+def generated_key_point_side_length(env: ManagerBasedRLEnv, command_name: str) -> torch.Tensor:
+    """The generated key point side length from command term in the command manager with the given name."""
+    return env.command_manager.get_command_key_point_side_length(command_name)
+
 
 """
 Time.

@@ -8,7 +8,7 @@ from dataclasses import MISSING
 
 from isaaclab.managers import CommandTermCfg
 from isaaclab.markers import VisualizationMarkersCfg
-from isaaclab.markers.config import BLUE_ARROW_X_MARKER_CFG, FRAME_MARKER_CFG, GREEN_ARROW_X_MARKER_CFG
+from isaaclab.markers.config import BLUE_ARROW_X_MARKER_CFG, FRAME_MARKER_CFG, GREEN_ARROW_X_MARKER_CFG, KEY_POINT_FRAME_MARKER_CFG, KEY_POINT_0_MARKER_CFG, KEY_POINT_1_MARKER_CFG, KEY_POINT_2_MARKER_CFG
 from isaaclab.utils import configclass
 
 from .null_command import NullCommand
@@ -179,6 +179,25 @@ class UniformPoseCommandCfg(CommandTermCfg):
         prim_path="/Visuals/Command/body_pose"
     )
     """The configuration for the current pose visualization marker. Defaults to FRAME_MARKER_CFG."""
+
+    key_point_frame_visualizer_cfg: VisualizationMarkersCfg = KEY_POINT_FRAME_MARKER_CFG.replace(
+        prim_path="/Visuals/Command/key_point_frame"
+    )
+
+    key_point_0_visualizer_cfg: VisualizationMarkersCfg = KEY_POINT_0_MARKER_CFG.replace(
+        prim_path="/Visuals/Command/key_point_0"
+    )
+    """The configuration for the key point 0 visualization marker. Defaults to KEY_POINT_0_MARKER_CFG."""
+
+    key_point_1_visualizer_cfg: VisualizationMarkersCfg = KEY_POINT_1_MARKER_CFG.replace(
+        prim_path="/Visuals/Command/key_point_1"
+    )
+    """The configuration for the key point 1 visualization marker. Defaults to KEY_POINT_1_MARKER_CFG."""
+
+    key_point_2_visualizer_cfg: VisualizationMarkersCfg = KEY_POINT_2_MARKER_CFG.replace(
+        prim_path="/Visuals/Command/key_point_2"
+    )
+    """The configuration for the key point 2 visualization marker. Defaults to KEY_POINT_2_MARKER_CFG."""
 
     # Set the scale of the visualization markers to (0.1, 0.1, 0.1)
     goal_pose_visualizer_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
