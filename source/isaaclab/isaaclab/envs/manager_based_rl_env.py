@@ -244,6 +244,22 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
         # note: done after reset to get the correct observations for reset envs
         self.obs_buf = self.observation_manager.compute(update_history=True)
 
+        # -- raw per-asset kinematic state, for offline reward-term reconstruction
+        #    (PPL: some reward terms, e.g. Ant's `progress`, are functions of raw
+        #    root_pos_w that never survive into the policy observation — this lets
+        #    data collected now support reward-term redesign later without needing
+        #    to re-run the simulator; see hri-ppl PPL_Implementation_Plan.md,
+        #    "Option 2" for the analysis that motivated this)
+        self.extras["raw_asset_state_dict"] = {
+            asset_name: {
+                "root_pos_w": asset.data.root_pos_w.clone(),
+                "root_quat_w": asset.data.root_quat_w.clone(),
+                "joint_pos": asset.data.joint_pos.clone(),
+                "joint_vel": asset.data.joint_vel.clone(),
+            }
+            for asset_name, asset in self.scene.articulations.items()
+        }
+
         # return observations, rewards, resets and extras
         self.extras["reward_term_buf_dict"] = self.reward_term_buf_dict
         self.extras["reward_term_unweighted_buf_dict"] = self.reward_term_unweighted_buf_dict
